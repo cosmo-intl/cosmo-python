@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      # PyICU is a C extension; it needs the system ICU headers + a compiler.
+      - name: Install ICU
+        run: sudo apt-get update && sudo apt-get install -y libicu-dev pkg-config
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Run tests
+        run: uv run --extra test --python ${{ matrix.python-version }} pytest -q

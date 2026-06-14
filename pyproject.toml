@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+# PyPI distribution name; the bare `cosmo` is taken on PyPI, so we publish as
+# `cosmo-intl` (matches the GitHub org) while the import package stays `cosmo`.
+name = "cosmo-intl"
+version = "0.1.0"
+description = "Ergonomic internationalization (i18n) and localization (l10n) for Python — format numbers, currency, dates, times, units, lists and ICU plurals for any locale, powered by ICU and Unicode CLDR via PyICU. No bundled locale data."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Miloun", email = "cosmo-python@miloun.com" }]
+keywords = [
+    "i18n",
+    "l10n",
+    "internationalization",
+    "internationalisation",
+    "localization",
+    "localisation",
+    "intl",
+    "icu",
+    "cldr",
+    "unicode",
+    "locale",
+    "translation",
+    "currency",
+    "money",
+    "date",
+    "datetime",
+    "timezone",
+    "pluralization",
+    "pyicu",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Localization",
+    "Topic :: Software Development :: Internationalization",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["PyICU>=2.10"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/cosmo-intl/cosmo-python"
+Repository = "https://github.com/cosmo-intl/cosmo-python"
+"PHP port" = "https://github.com/cosmo-intl/cosmo-php"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cosmo"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
