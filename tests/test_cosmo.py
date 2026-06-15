@@ -150,7 +150,7 @@ def test_duration():
 def test_moment_date_time():
     c = Cosmo("en_US", {"timeZone": "UTC"})
     assert c.date(TS, "long") == "February 2, 2020"
-    assert c.time(TS, "short") == "12:13 AM"
+    assert c.time(TS, "short").replace(" ", " ") == "12:13 AM"  # ICU 73+ uses narrow no-break space before AM/PM
     assert c.moment(TS, "none", "none") == ""
 
 
