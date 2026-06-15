@@ -797,16 +797,23 @@ class Cosmo:
         """
         if needle == "":
             return True
-        strength = {
-            "base": icu.Collator.PRIMARY,
-            "accent": icu.Collator.SECONDARY,
-            "case": icu.Collator.TERTIARY,
-            "variant": icu.Collator.IDENTICAL,
-        }.get(sensitivity)
-        if strength is None:
+        if sensitivity not in ("base", "accent", "case", "variant"):
             raise InvalidArgumentError(f'"{sensitivity}" is not a valid sensitivity.')
         collator = icu.Collator.createInstance(self._loc)
-        collator.setStrength(strength)
+        if sensitivity == "base":
+            collator.setStrength(icu.Collator.PRIMARY)
+        elif sensitivity == "accent":
+            collator.setStrength(icu.Collator.SECONDARY)
+        elif sensitivity == "case":
+            # Distinguish case but not accents: PRIMARY so "à" = "a",
+            # plus CASE_LEVEL so "a" ≠ "A". Mirrors PHP/Java.
+            collator.setStrength(icu.Collator.PRIMARY)
+            collator.setAttribute(icu.UCollAttribute.CASE_LEVEL, icu.UCollAttributeValue.ON)
+        else:  # variant
+            # All differences matter; TERTIARY matches PHP/Java.
+            # IDENTICAL would also reject normalisation differences, which
+            # the JS Intl definition does not require.
+            collator.setStrength(icu.Collator.TERTIARY)
         _apply_collation_options(collator, options)
         hay = self._graphemes(haystack)
         need_len = len(self._graphemes(needle))

@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 # PyPI distribution name; the bare `cosmo` is taken on PyPI, so we publish as
 # `cosmo-intl` (matches the GitHub org) while the import package stays `cosmo`.
 name = "cosmo-intl"
-version = "0.1.1"
+version = "1.0.0"
 description = "Ergonomic internationalization (i18n) and localization (l10n) for Python — format numbers, currency, dates, times, units, lists and ICU plurals for any locale, powered by ICU and Unicode CLDR via PyICU. No bundled locale data."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -47,10 +47,11 @@ dependencies = ["PyICU>=2.10"]
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+docs = ["pdoc>=14"]
 
 [project.urls]
 Homepage = "https://cosmo.miloun.com/?lang=python"
-Documentation = "https://cosmo.miloun.com/api-reference/?lang=python"
+Documentation = "https://cosmo-intl.github.io/cosmo-python/"
 Repository = "https://github.com/cosmo-intl/cosmo-python"
 "PHP port" = "https://github.com/salarmehr/cosmopolitan"
 "JS port" = "https://github.com/cosmo-intl/cosmo-js"
