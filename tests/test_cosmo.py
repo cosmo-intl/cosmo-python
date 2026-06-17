@@ -97,6 +97,17 @@ def test_number_percentage():
     assert Cosmo("en").percentage(0.12345, 2) == "12.35%"
 
 
+def test_precision():
+    assert Cosmo("en").precision(1) == "1.00"  # fraction_digits defaults to 2
+    assert Cosmo("en").precision(1, 2) == "1.00"
+    assert Cosmo("en").precision(1.002, 2) == "1.00"
+    assert Cosmo("en").precision(1.5, 2) == "1.50"
+    assert Cosmo("en").precision(1234.5, 2) == "1,234.50"
+    assert Cosmo("de").precision(1.5, 2) == "1,50"
+    # options widen the band: at least 1, at most 3 fraction digits.
+    assert Cosmo("en").precision(1.2, 1, {"maximum_fraction_digits": 3}) == "1.2"
+
+
 def test_money():
     assert Cosmo("en_AU").money(1234.5) == "$1,234.50"
     assert Cosmo("en_US").money(1234.5, "EUR") == "€1,234.50"

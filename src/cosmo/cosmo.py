@@ -546,6 +546,21 @@ class Cosmo:
         _apply_number_options(fmt, options)
         return fmt.format(value)
 
+    def precision(self, value: float, fraction_digits: int = 2, options: Optional[dict] = None) -> str:
+        """Format a number with a fixed number of fraction digits.
+
+        Always exactly ``fraction_digits`` digits (default 2), padding with trailing
+        zeros and rounding as needed: ``1`` renders as ``"1.00"`` and ``1.002`` stays
+        ``"1.00"``, never ``"1.0"``. Pass an
+        ``options`` bag (see :meth:`number`) to widen the band — e.g.
+        ``{"maximum_fraction_digits": 3}`` — or tweak rounding/grouping.
+        """
+        fmt = icu.NumberFormat.createInstance(self._loc)
+        fmt.setMinimumFractionDigits(fraction_digits)
+        fmt.setMaximumFractionDigits(fraction_digits)
+        _apply_number_options(fmt, options)
+        return fmt.format(value)
+
     def percentage(self, value: float, precision: int = 3, options: Optional[dict] = None) -> str:
         """Format a fraction as a percentage (``0.2`` → ``"20%"``)."""
         fmt = icu.NumberFormat.createPercentInstance(self._loc)
